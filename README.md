@@ -1,6 +1,6 @@
 GPU Based keylogger
 -------------------
-* GPU 에서 작동되는 키로거의 PoC 코드이다.
+* GPU 메모리에서 실행되는 키로거의 PoC 코드이다.
 * 참고 : [GPU_based_keylogger.pdf](/gpu-based-keylogger.pdf)
 
 DEMO
