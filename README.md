@@ -1,7 +1,7 @@
 GPU Based keylogger
 -------------------
 * GPU 에서 작동되는 키로거의 PoC 코드이다.
-* 2015년에 [You Can Type, but You Can’t Hide: A Stealthy GPU-based Keylogger](https://www3.cs.stonybrook.edu/~mikepo/papers/gpukeylogger.eurosec13.pdf)를 기반으로 제작한 GPU 기반 키로거 입니다.
+* 참고 : [GPU_based_keylogger.pdf](/gpu-based-keylogger.pdf)
 
 DEMO
 ----
