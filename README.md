@@ -21,5 +21,5 @@ DEMO
         Codename:       vivid
 
 
-* demo video
+* demo video:  
 [![Video Label](https://t1.daumcdn.net/thumb/C640x360.q50.fjpg/?fname=http://t1.daumcdn.net/tvpot/thumb/v0310aGWPaaqtdtaAEidUAW/thumb.png)](https://play-tv.kakao.com/v/71853580)
