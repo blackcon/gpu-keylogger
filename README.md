@@ -1,5 +1,3 @@
-# gpu-keylogger
-
 GPU Based keylogger
 -------------------
 * GPU 에서 작동되는 키로거의 PoC 코드이다.
@@ -24,4 +22,4 @@ DEMO
 
 
 * demo video
-[![Video Label](https://play-tv.kakao.com/v/71853580)](https://play-tv.kakao.com/v/71853580)
+[![Video Label](https://t1.daumcdn.net/thumb/C640x360.q50.fjpg/?fname=http://t1.daumcdn.net/tvpot/thumb/v0310aGWPaaqtdtaAEidUAW/thumb.png)](https://play-tv.kakao.com/v/71853580)
