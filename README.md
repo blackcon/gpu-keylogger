@@ -22,4 +22,4 @@ DEMO
 
 
 * demo video:  
-[![Video Label](https://t1.daumcdn.net/thumb/C640x360.q50.fjpg/?fname=http://t1.daumcdn.net/tvpot/thumb/v0310aGWPaaqtdtaAEidUAW/thumb.png)](https://play-tv.kakao.com/v/71853580)
+[![Video Label](https://t1.daumcdn.net/thumb/C640x360.q50.fjpg/?fname=http://t1.daumcdn.net/tvpot/thumb/v0310aGWPaaqtdtaAEidUAW/thumb.png)](https://cdn.videofarm.daum.net/vod/v0310aGWPaaqtdtaAEidUAW/mp4_720P_2M_T1/movie.mp4?px-bps=5703072&px-bufahead=10&px-time=1584104454&px-hash=a28fa05f4a904e973fb3b988facc61e9)
