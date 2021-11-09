@@ -23,4 +23,4 @@ DEMO
 
 
 * demo (click img):  
-[![Video Label](https://t1.daumcdn.net/thumb/C640x360.q50.fjpg/?fname=http://t1.daumcdn.net/tvpot/thumb/v0310aGWPaaqtdtaAEidUAW/thumb.png)](https://cdn.videofarm.daum.net/vod/v0310aGWPaaqtdtaAEidUAW/mp4_720P_2M_T1/movie.mp4?px-bps=5703072&px-bufahead=10&px-time=1584104454&px-hash=a28fa05f4a904e973fb3b988facc61e9)
+[![Video Label](https://t1.daumcdn.net/thumb/C640x360.q50.fjpg/?fname=http://t1.daumcdn.net/tvpot/thumb/v0310aGWPaaqtdtaAEidUAW/thumb.png)](https://vsu.play.kakao.com/vod/v0310aGWPaaqtdtaAEidUAW/mp4/mp4_720P_2M_T1/clip.mp4?px-time=1636429564&px-bps=5703072&px-bufahead=10&px-hash=549fbdcdbe211a6c5762c63d87668323)
