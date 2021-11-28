@@ -84,14 +84,19 @@ int modify_pgt_start( unsigned long _phys, unsigned long addr )
 			}
 			if( addr == WRITE_PAGE ){
 				printk( "modify_page_table\n" );
+				// WRITE_PAGE 의 pte 주소를 획득
 				tmp = pte->pte & 0xffff000000000fff;
+				// pte 주소를 urb.transfer_buffer의 주소로 맵핑
 				tmp |= phys;
+				// WRITE_PAGE의 pte가 urb.transfer_buffer의 주소를 가르키도록 함
 				pte->pte = tmp;
 			}
 			else if( addr == SEND_BUFFER ){
 				printk( "Send buffer from kernel to user\n" );
+				// Translate from physical_memory to virtual_memory
 				tmp = (unsigned long)pte->pte & 0x0000fffffffff000;
 				tmp += 0xffff880000000000;
+				// Write physical_address at virtual_memory of SEND_BUFFER
             			*(unsigned long*)tmp = _phys;
 			}
 		}
