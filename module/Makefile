@@ -1,11 +1,10 @@
+
 obj-m += key.o
 
-KDIR = /usr/src/linux-headers-$(shell uname -r)
-#KDIR = /usr/src/linux-headers-3.13.0-24-generic
+KDIR = /lib/modules/$(shell uname -r)/build
 ccflags-y := -g
 
 all:
-	$(MAKE) -C $(KDIR) SUBDIRS=$(PWD) modules
-
+	$(MAKE) -C $(KDIR) M=$(shell pwd) modules
 clean:
-	rm -rf *.o *.ko *.mod.* *.symvers *.order .*
+	$(MAKE) -C $(KDIR) M=$(shell pwd) clean
